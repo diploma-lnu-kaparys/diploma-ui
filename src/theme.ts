@@ -3,41 +3,41 @@ import { createTheme } from "@mui/material/styles";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    primary: {
-      main: "#1976d2"
-    },
-    secondary: {
-      main: "#9c27b0"
-    },
-    background: {
-      default: "#1d1d1d",
-      paper: "#121212"
-    }
-  },
-  typography: {
-    fontFamily: "Roboto, Arial, sans-serif"
+    primary: { main: "#1976d2" },
+    background: { default: "#1d1d1d", paper: "#121212" }
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        "*": {
+          boxSizing: "border-box"
+        },
+        a: {
+          textDecoration: "none"
+        },
         body: {
           margin: 0,
           padding: 0,
           backgroundColor: "#1d1d1d",
           color: "#fff"
         },
-        "*": {
-          boxSizing: "border-box"
+        "*::-webkit-scrollbar": {
+          width: "6px",
+          height: "6px"
         },
-        a: {
-          textDecoration: "none"
-        }
-      }
-    },
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: "#121212"
+        "*::-webkit-scrollbar-track": {
+          background: "transparent"
+        },
+        "*::-webkit-scrollbar-thumb": {
+          backgroundColor: "#A9A9A9",
+          borderRadius: "4px"
+        },
+        "*::-webkit-scrollbar-corner": {
+          background: "transparent"
+        },
+        html: {
+          scrollbarWidth: "thin",
+          scrollbarColor: "#A9A9A9 transparent"
         }
       }
     }
@@ -47,15 +47,9 @@ const darkTheme = createTheme({
 const lightTheme = createTheme({
   palette: {
     mode: "light",
-    primary: {
-      main: "#1976d2"
-    },
-    secondary: {
-      main: "#9c27b0"
-    },
-    background: {
-      default: "#f5f5f5"
-    }
+    primary: { main: "#1976d2" },
+    secondary: { main: "#9c27b0" },
+    background: { default: "#f5f5f5" }
   },
   typography: {
     fontFamily: "Roboto, Arial, sans-serif"
@@ -74,6 +68,24 @@ const lightTheme = createTheme({
         },
         a: {
           textDecoration: "none"
+        },
+        "*::-webkit-scrollbar": {
+          width: "6px",
+          height: "6px"
+        },
+        "*::-webkit-scrollbar-track": {
+          background: "transparent"
+        },
+        "*::-webkit-scrollbar-thumb": {
+          backgroundColor: "#909090",
+          borderRadius: "4px"
+        },
+        "*::-webkit-scrollbar-corner": {
+          background: "transparent"
+        },
+        html: {
+          scrollbarWidth: "thin",
+          scrollbarColor: "#909090 transparent"
         }
       }
     },

@@ -3,6 +3,5 @@
   "myAnalyses": "My Analyses",
   "videoTitle": "Video Analysis",
   "uploadVideo": "Upload a video file",
-  "dragInstruction": "Click or drag a video file here",
-  "selectedFile": "Selected file: {{fileName}}"
+  "dragInstruction": "Click or drag a video file here"
 }
