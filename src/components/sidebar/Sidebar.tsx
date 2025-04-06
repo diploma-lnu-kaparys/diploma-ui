@@ -1,7 +1,15 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { List, ListItemButton, ListItemText, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
+import { useTranslation } from "react-i18next";
 
 const ScrollableContainer = styled("div")({
   height: "90%",
@@ -24,7 +32,11 @@ const StyledListItem = styled(ListItemButton)(({ theme }) => ({
   }
 }));
 
-export default function Sidebar() {
+type SidebarProps = {
+  toggleSidebar: () => void;
+};
+
+export default function Sidebar({ toggleSidebar }: SidebarProps) {
   const { t } = useTranslation();
 
   const projects = Array.from({ length: 30 }, (_, i) => ({
@@ -34,9 +46,17 @@ export default function Sidebar() {
 
   return (
     <>
-      <Typography variant="h6" p={2}>
-        {t("myAnalyses")}
-      </Typography>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        p={2}
+      >
+        <Typography variant="h6">{t("myAnalyses")}</Typography>
+        <IconButton onClick={toggleSidebar}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <ScrollableContainer>
         <List>
           {projects.map((project) => (

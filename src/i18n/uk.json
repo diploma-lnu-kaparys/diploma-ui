@@ -3,5 +3,16 @@
   "myAnalyses": "Мої Аналізи",
   "videoTitle": "Аналіз відео",
   "uploadVideo": "Завантажте файл відео",
-  "dragInstruction": "Клікніть або перетягніть відео сюди"
+  "dragInstruction": "Клікніть або перетягніть відео сюди",
+  "registrationTitle": "Реєстрація",
+  "email": "Ел. пошта",
+  "sendCode": "Надіслати код",
+  "password": "Пароль",
+  "continue": "Продовжити",
+  "code": "Код з пошти",
+  "finishRegistration": "Завершити реєстрацію",
+  "signIn": "Увійти",
+  "signUp": "Реєстрація",
+  "noAccount": "Немає акаунту?",
+  "backToSignIn": "Вже зареєстровані?"
 }

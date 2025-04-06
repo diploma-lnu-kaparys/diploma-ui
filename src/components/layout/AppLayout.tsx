@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Sidebar from "../siвebar/Sidebar";
+import Sidebar from "../sidebar/Sidebar";
 import LayoutHeader from "./LayoutHeader";
 import {
   getSidebarStyles,
@@ -17,8 +17,9 @@ type AppLayoutProps = {
 export default function AppLayout({
   children,
   isDarkMode,
-  setIsDarkMode
-}: AppLayoutProps) {
+  setIsDarkMode,
+  isRegistered
+}: AppLayoutProps & { isRegistered: boolean }) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
   const theme = useTheme();
 
@@ -26,36 +27,34 @@ export default function AppLayout({
 
   return (
     <Box sx={{ position: "relative", height: "100vh" }}>
-      <Box
-        component="aside"
-        sx={{
-          width: "280px",
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          overflow: "hidden",
-          transition: "transform 0.3s ease",
-          transform: isSidebarOpen ? "translateX(0)" : "translateX(-280px)",
-          ...getSidebarStyles(isDarkMode, theme)
-        }}
-      >
-        <Sidebar />
-      </Box>
+      {isRegistered && (
+        <Box
+          component="aside"
+          sx={{
+            width: "280px",
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            overflow: "hidden",
+            transition: "transform 0.3s ease",
+            transform: isSidebarOpen ? "translateX(0)" : "translateX(-280px)",
+            ...getSidebarStyles(isDarkMode, theme)
+          }}
+        >
+          <Sidebar toggleSidebar={toggleSidebar} />
+        </Box>
+      )}
 
       <Box
         sx={{
-          marginLeft: isSidebarOpen ? "280px" : "0px",
+          marginLeft: isRegistered && isSidebarOpen ? "280px" : "0px",
           transition: "margin-left 0.3s ease",
           height: "100vh",
           ...getMainContentStyles(isDarkMode, theme)
         }}
       >
-        <LayoutHeader
-          toggleSidebar={toggleSidebar}
-          isDarkMode={isDarkMode}
-          setIsDarkMode={setIsDarkMode}
-        />
+        <LayoutHeader isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         {children}
       </Box>
     </Box>

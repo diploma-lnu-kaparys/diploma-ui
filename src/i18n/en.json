@@ -3,5 +3,16 @@
   "myAnalyses": "My Analyses",
   "videoTitle": "Video Analysis",
   "uploadVideo": "Upload a video file",
-  "dragInstruction": "Click or drag a video file here"
+  "dragInstruction": "Click or drag a video file here",
+  "registrationTitle": "Registration",
+  "email": "Email",
+  "sendCode": "Send Code",
+  "password": "Password",
+  "continue": "Continue",
+  "code": "Code from email",
+  "finishRegistration": "Finish Registration",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "noAccount": "Don’t have an account?",
+  "backToSignIn": "Already have an account?"
 }
