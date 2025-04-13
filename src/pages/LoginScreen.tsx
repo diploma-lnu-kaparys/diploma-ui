@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { SIGNUP_ROUTE } from "../routes/routes";
 
-interface SignInPageProps {
-  onSignInComplete: () => void;
+interface LoginScreenProps {
+  returnUrl?: string | null;
 }
 
-const SignInPage: React.FC<SignInPageProps> = ({ onSignInComplete }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ returnUrl }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -16,8 +16,12 @@ const SignInPage: React.FC<SignInPageProps> = ({ onSignInComplete }) => {
 
   const handleSignIn = () => {
     console.log("Signing in with:", email, password);
-    onSignInComplete();
-    navigate("/");
+
+    if (returnUrl) {
+      navigate(returnUrl);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -61,4 +65,4 @@ const SignInPage: React.FC<SignInPageProps> = ({ onSignInComplete }) => {
   );
 };
 
-export default SignInPage;
+export default LoginScreen;

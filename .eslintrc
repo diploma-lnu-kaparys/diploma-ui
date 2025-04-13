@@ -30,7 +30,10 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/no-unused-expressions": "off"
+    "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "react/no-children-prop": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
     "react": {

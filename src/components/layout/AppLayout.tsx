@@ -1,62 +1,87 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import Sidebar from "../sidebar/Sidebar";
-import LayoutHeader from "./LayoutHeader";
 import {
-  getSidebarStyles,
-  getMainContentStyles
-} from "../../styles/scrollbarStyles";
+  Box,
+  CssBaseline,
+  Drawer,
+  Toolbar,
+  styled,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
+import useAuth from "../hooks/useAuth";
+import LayoutHeader from "./LayoutHeader";
+import Sidebar from "../sidebar/Sidebar";
+
+const drawerWidth = 280;
+
+const Main = styled("main", {
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth"
+})<{
+  open?: boolean;
+  drawerWidth?: number;
+}>(({ theme, open, drawerWidth }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create("margin", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+
+  ...(open && {
+    marginLeft: drawerWidth ?? 280
+  }),
+
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: 0
+  }
+}));
 
 type AppLayoutProps = {
   children: React.ReactNode;
-  isDarkMode: boolean;
-  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function AppLayout({
-  children,
-  isDarkMode,
-  setIsDarkMode,
-  isRegistered
-}: AppLayoutProps & { isRegistered: boolean }) {
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+export default function AppLayout({ children }: AppLayoutProps) {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { authorized } = useAuth();
+  const [open, setOpen] = React.useState(authorized);
 
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const toggleSidebar = () => setOpen((prev) => !prev);
+
+  const drawerVariant = isMobile ? "temporary" : "persistent";
 
   return (
-    <Box sx={{ position: "relative", height: "100vh" }}>
-      {isRegistered && (
-        <Box
-          component="aside"
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+
+      <LayoutHeader
+        onMenuClick={toggleSidebar}
+        open={!isMobile && open}
+        drawerWidth={drawerWidth}
+      />
+
+      {authorized && (
+        <Drawer
+          variant={drawerVariant}
+          open={open}
+          onClose={toggleSidebar}
           sx={{
-            width: "280px",
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            overflow: "hidden",
-            transition: "transform 0.3s ease",
-            transform: isSidebarOpen ? "translateX(0)" : "translateX(-280px)",
-            ...getSidebarStyles(isDarkMode, theme)
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box"
+            }
           }}
         >
           <Sidebar toggleSidebar={toggleSidebar} />
-        </Box>
+        </Drawer>
       )}
 
-      <Box
-        sx={{
-          marginLeft: isRegistered && isSidebarOpen ? "280px" : "0px",
-          transition: "margin-left 0.3s ease",
-          height: "100vh",
-          ...getMainContentStyles(isDarkMode, theme)
-        }}
-      >
-        <LayoutHeader isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+      <Main open={authorized && open && !isMobile} drawerWidth={drawerWidth}>
+        <Toolbar />
         {children}
-      </Box>
+      </Main>
     </Box>
   );
 }

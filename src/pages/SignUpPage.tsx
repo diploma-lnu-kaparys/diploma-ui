@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { SIGNIN_ROUTE } from "../routes/routes";
+import { LOGIN_ROUTE } from "../routes/routes";
 
 const SignUpPage: React.FC = () => {
   const { t } = useTranslation();
@@ -48,7 +48,7 @@ const SignUpPage: React.FC = () => {
             fullWidth
             onClick={handleEmailSubmit}
           >
-            {t("sendCode")}
+            {t("continue")}
           </Button>
         </Box>
       )}
@@ -89,13 +89,13 @@ const SignUpPage: React.FC = () => {
             fullWidth
             onClick={handleCodeSubmit}
           >
-            {t("finishRegistration")}
+            {t("continue")}
           </Button>
         </Box>
       )}
       <Typography align="center" sx={{ mt: 2 }}>
         {t("backToSignIn")}{" "}
-        <Link component="button" onClick={() => navigate(SIGNIN_ROUTE)}>
+        <Link component="button" onClick={() => navigate(LOGIN_ROUTE)}>
           {t("signIn")}
         </Link>
       </Typography>

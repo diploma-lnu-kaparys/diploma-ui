@@ -1,0 +1,18 @@
+.toast .Toastify__toast {
+  z-index: 9999999;
+  border-radius: 8px;
+}
+
+.Toastify__toast-container {
+  z-index: 9999999 !important;
+}
+
+.desktop-toast-container {
+  margin-bottom: 65px;
+}
+
+.mobile-toast .Toastify__toast {
+  line-height: 1.2;
+  min-height: 40px;
+  margin-top: 10px;
+}

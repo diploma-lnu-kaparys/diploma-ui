@@ -1,75 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { Suspense } from "react";
+import {
+  createTheme,
+  CssBaseline,
+  StyledEngineProvider,
+  ThemeProvider
+} from "@mui/material";
+import { AuthContextProvider } from "./components/hooks/useAuth";
+import { createBrowserHistory } from "history";
+import AppRouter from "./routes/route";
+import { LoadingPage } from "./components/loading/loadingPage";
+import ReactQueryClient from "./api/ReactQueryClient";
+import { ToastAlertProvider } from "./components/app/ToastAlert/ToastAlertProvider";
+import { HistoryContext } from "./components/hooks/useHistory";
 import AppLayout from "./components/layout/AppLayout";
-import HomePage from "./pages/HomePage";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import { publicRoutes } from "./routes/groupedRoutes";
-import { lightTheme, darkTheme } from "./theme";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { DEFAULT_ROUTE, SIGNIN_ROUTE, SIGNUP_ROUTE } from "./routes/routes";
+import { ThemeProvider as StylesThemeProvider } from "@mui/styles";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDarkMode(true);
-    }
-  }, []);
+  const history = createBrowserHistory();
+  const defaultTheme = createTheme();
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <HistoryContext.Provider value={history}>
       <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={DEFAULT_ROUTE}
-            element={
-              isAuthenticated ? (
-                <AppLayout
-                  isDarkMode={isDarkMode}
-                  setIsDarkMode={setIsDarkMode}
-                  isRegistered={true}
-                >
-                  <HomePage />
-                </AppLayout>
-              ) : (
-                <Navigate to={SIGNIN_ROUTE} />
-              )
-            }
-          />
-          <Route
-            path={SIGNIN_ROUTE}
-            element={
-              <AppLayout
-                isDarkMode={isDarkMode}
-                setIsDarkMode={setIsDarkMode}
-                isRegistered={false}
-              >
-                <SignInPage onSignInComplete={() => setIsAuthenticated(true)} />
-              </AppLayout>
-            }
-          />
-          <Route
-            path={SIGNUP_ROUTE}
-            element={
-              <AppLayout
-                isDarkMode={isDarkMode}
-                setIsDarkMode={setIsDarkMode}
-                isRegistered={false}
-              >
-                <SignUpPage />
-              </AppLayout>
-            }
-          />
-          {publicRoutes}
-          <Route path="*" element={<Navigate to={SIGNIN_ROUTE} />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+      <ToastAlertProvider>
+        <StyledEngineProvider injectFirst>
+          <StylesThemeProvider theme={defaultTheme}>
+            <ThemeProvider theme={defaultTheme}>
+              <Suspense fallback={<LoadingPage />}>
+                <ReactQueryClient>
+                  <AuthContextProvider>
+                    <AppLayout>
+                      <AppRouter />
+                    </AppLayout>
+                  </AuthContextProvider>
+                </ReactQueryClient>
+              </Suspense>
+            </ThemeProvider>
+          </StylesThemeProvider>
+        </StyledEngineProvider>
+      </ToastAlertProvider>
+    </HistoryContext.Provider>
   );
 }
 

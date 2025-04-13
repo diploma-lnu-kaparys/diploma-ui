@@ -1,7 +1,7 @@
 import { Theme } from "@mui/material/styles";
 
-export const getSidebarStyles = (isDarkMode: boolean, theme: Theme) => ({
-  backgroundColor: isDarkMode ? "#121212" : "#dfdfdf",
+export const getSidebarStyles = (theme: Theme) => ({
+  backgroundColor: "#dfdfdf",
   overflowY: "auto",
   scrollbarWidth: "thin",
   "&::-webkit-scrollbar": {
@@ -11,14 +11,12 @@ export const getSidebarStyles = (isDarkMode: boolean, theme: Theme) => ({
     background: "transparent"
   },
   "&::-webkit-scrollbar-thumb": {
-    backgroundColor: isDarkMode
-      ? theme.palette.primary.dark
-      : theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: "4px"
   }
 });
 
-export const getMainContentStyles = (isDarkMode: boolean, theme: Theme) => ({
+export const getMainContentStyles = (theme: Theme) => ({
   overflow: "auto",
   p: 2,
   scrollbarWidth: "thin",
@@ -29,9 +27,7 @@ export const getMainContentStyles = (isDarkMode: boolean, theme: Theme) => ({
     background: "transparent"
   },
   "&::-webkit-scrollbar-thumb": {
-    backgroundColor: isDarkMode
-      ? theme.palette.primary.dark
-      : theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: "4px"
   }
 });
