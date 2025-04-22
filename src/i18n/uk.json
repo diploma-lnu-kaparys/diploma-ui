@@ -14,5 +14,28 @@
   "signIn": "Увійти",
   "signUp": "Реєстрація",
   "noAccount": "Немає акаунту?",
-  "backToSignIn": "Вже зареєстровані?"
+  "backToSignIn": "Вже зареєстровані?",
+  "signup.title": "Створіть акаунт",
+  "signup.enter": "Ваші дані",
+  "signup.code": "Код підтвердження",
+  "signup.done": "Готово!",
+  "signup.sendCode": "Відправити код",
+  "signup.verify": "Підтвердити код",
+  "signup.resend": "Відправити ще раз",
+  "signup.codePrompt": "Ми надіслали вам код на {{email}}. Введіть його тут:",
+  "signup.codeSent": "Код відправлено!",
+  "signup.completed": "Реєстрацію завершено!",
+  "signup.success": "Ви успішно зареєструвалися — зараз перенаправимо...",
+  "login.success": "Ви успішно увійшли!",
+  "logout.confirmTitle": "Підтвердіть вихід",
+  "logout.confirmText": "Ви впевнені, що хочете вийти?",
+  "logout.cancel": "Скасувати",
+  "logout.logout": "Вийти",
+  "signup.invalidEmail": "Будь ласка, введіть коректну ел. пошту",
+  "passwordCriteria": {
+    "minLength": "Не менш ніж 8 символів",
+    "hasLetter": "Принаймні одна літера",
+    "hasNumber": "Принаймні одна цифра",
+    "hasSpecial": "Принаймні один спеціальний символ"
+  }
 }

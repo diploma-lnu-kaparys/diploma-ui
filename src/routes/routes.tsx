@@ -5,4 +5,3 @@ export const VIDEO_ANALYSIS_ROUTE = "/video";
 export const SIGNUP_ROUTE = "/signup";
 export const DEFAULT_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
-export const LOGOUT_ROUTE = "/logout";

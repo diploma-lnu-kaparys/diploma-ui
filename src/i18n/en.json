@@ -14,5 +14,28 @@
   "signIn": "Sign In",
   "signUp": "Sign Up",
   "noAccount": "Don’t have an account?",
-  "backToSignIn": "Already have an account?"
+  "backToSignIn": "Already have an account?",
+  "signup.title": "Create your account",
+  "signup.enter": "Your details",
+  "signup.code": "Verification code",
+  "signup.done": "All set!",
+  "signup.sendCode": "Send verification code",
+  "signup.verify": "Verify code",
+  "signup.resend": "Resend code",
+  "signup.codePrompt": "We sent a code to {{email}}. Please enter it below:",
+  "signup.codeSent": "Verification code sent!",
+  "signup.completed": "Registration completed!",
+  "signup.success": "You’re all signed up — redirecting...",
+  "login.success": "Successfully signed in!",
+  "logout.confirmTitle": "Confirm Logout",
+  "logout.confirmText": "Are you sure you want to sign out?",
+  "logout.cancel": "Cancel",
+  "logout.logout": "Logout",
+  "signup.invalidEmail": "Please enter a valid email address",
+  "passwordCriteria": {
+    "minLength": "At least 8 characters",
+    "hasLetter": "One alphabetical character",
+    "hasNumber": "One number",
+    "hasSpecial": "One special character"
+  }
 }

@@ -68,7 +68,6 @@ const AxiosInterceptor = ({ children }: AxiosInstanceProps) => {
     />
   );
 
-  // Перевірка доступності сервера кожну хвилину
   useEffect(() => {
     if (!healthCheckEnabled) return;
     const interval = setInterval(async () => {
@@ -98,7 +97,6 @@ const AxiosInterceptor = ({ children }: AxiosInstanceProps) => {
     };
   }, []);
 
-  // Відображення повідомлення про мережеві помилки
   useEffect(() => {
     const isOffline = !isUserOnline || !isServerOnline;
 
@@ -137,7 +135,6 @@ const AxiosInterceptor = ({ children }: AxiosInstanceProps) => {
     closeNetworkAlert
   ]);
 
-  // Інтерцептори для запитів і відповідей
   useEffect(() => {
     const responseOnFulfilledInterceptor = (response: AxiosResponse) => {
       setIsServerOnline(true);

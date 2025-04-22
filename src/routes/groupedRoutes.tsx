@@ -1,3 +1,4 @@
+import React from "react";
 import { Navigate, Route } from "react-router-dom";
 import { HttpError } from "found";
 import {
@@ -7,29 +8,36 @@ import {
   LOGIN_ROUTE,
   DEFAULT_ROUTE
 } from "./routes";
-import SignUpPage from "../pages/SignUpPage";
-import ErrorPage from "../pages/errors/ErrorPage";
+import SignUpRoute from "./auth/signUp/SignUpRoute";
 import LoginRoute from "./auth/login/LoginRoute";
 import HomeRoute from "./default/HomeRoute";
+import ErrorPage from "../pages/errors/ErrorPage";
 
-export const NotFoundPage = () => {
-  return <ErrorPage error={new HttpError(404)} />;
-};
+export const NotFoundPage = () => <ErrorPage error={new HttpError(404)} />;
+export const AccessDeniedPage = () => <ErrorPage error={new HttpError(403)} />;
 
-export const AccessDeniedPage = () => {
-  return <ErrorPage error={new HttpError(403)} />;
-};
-
-export const loggedInRoutes = () => (
+export const loggedOutRoutes = (
   <>
-    <Route path={DEFAULT_ROUTE} element={<HomeRoute />} />
+    <Route
+      path={DEFAULT_ROUTE}
+      element={<Navigate to={LOGIN_ROUTE} replace />}
+    />
+    <Route path={LOGIN_ROUTE} element={<LoginRoute />} />
+    <Route path={SIGNUP_ROUTE} element={<SignUpRoute />} />
   </>
 );
 
-export const loggedOutRoutes = () => (
+export const loggedInRoutes = (
   <>
-    <Route path={LOGIN_ROUTE} element={<LoginRoute />} />
-    <Route path={SIGNUP_ROUTE} element={<SignUpPage />} />
+    <Route
+      path={LOGIN_ROUTE}
+      element={<Navigate to={DEFAULT_ROUTE} replace />}
+    />
+    <Route
+      path={SIGNUP_ROUTE}
+      element={<Navigate to={DEFAULT_ROUTE} replace />}
+    />
+    <Route path={DEFAULT_ROUTE} element={<HomeRoute />} />
   </>
 );
 

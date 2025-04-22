@@ -16,8 +16,8 @@ const AppRoutes = ({ isAuthenticated }: AppRoutesProps) => {
   return (
     <Routes>
       {publicRoutes}
-      {isAuthenticated && loggedInRoutes()}
-      {!isAuthenticated && loggedOutRoutes()}
+      {isAuthenticated && loggedInRoutes}
+      {!isAuthenticated && loggedOutRoutes}
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

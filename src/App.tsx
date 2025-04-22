@@ -14,6 +14,7 @@ import { ToastAlertProvider } from "./components/app/ToastAlert/ToastAlertProvid
 import { HistoryContext } from "./components/hooks/useHistory";
 import AppLayout from "./components/layout/AppLayout";
 import { ThemeProvider as StylesThemeProvider } from "@mui/styles";
+import AxiosInterceptor from "./api/AxiosInterceptor";
 
 function App() {
   const history = createBrowserHistory();
@@ -29,9 +30,11 @@ function App() {
               <Suspense fallback={<LoadingPage />}>
                 <ReactQueryClient>
                   <AuthContextProvider>
-                    <AppLayout>
-                      <AppRouter />
-                    </AppLayout>
+                    <AxiosInterceptor>
+                      <AppLayout>
+                        <AppRouter />
+                      </AppLayout>
+                    </AxiosInterceptor>
                   </AuthContextProvider>
                 </ReactQueryClient>
               </Suspense>
