@@ -1,5 +1,4 @@
-// src/pages/SignUpPage.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -30,6 +29,10 @@ import TokenService from "../components/utils/token";
 import { AuthBaseDto } from "@diploma-lnu-kaparys/diploma-api-client";
 import useAuth from "../components/hooks/useAuth";
 import { useToastAlert } from "../components/app/ToastAlert/ToastAlertProvider";
+import {
+  getCooldownLeft,
+  setCooldown
+} from "../components/utils/signupCooldown";
 
 interface FormState {
   email: string;
@@ -67,6 +70,19 @@ export default function SignUpPage() {
 
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+  const [cooldownLeft, setCooldownLeft] = useState(getCooldownLeft());
+  useEffect(() => {
+    if (cooldownLeft == 0) return;
+    const id = setInterval(() => setCooldownLeft(getCooldownLeft()), 1000);
+    return () => clearInterval(id);
+  }, [cooldownLeft]);
+
+  const handleCooldown = (seconds: number) => {
+    const ms = seconds * 1000;
+    setCooldown(ms);
+    setCooldownLeft(ms);
+  };
+
   // --- Email validation ---
   const emailRegex = /^\S+@\S+\.\S+$/;
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,10 +115,10 @@ export default function SignUpPage() {
         password: form.password
       }),
     onSuccess: (data: any) => {
+      handleCooldown(data.resendAvailableInSeconds);
       if (data?.sessionToken) {
         SignupSessionTokenService.updateSessionToken(data.sessionToken);
       }
-      showToastAlert("success", { message: t("signup.codeSent") });
       setActiveStep(steps[1]);
     },
     onError: (err: any) =>
@@ -128,6 +144,18 @@ export default function SignUpPage() {
       showToastAlert("success", { message: t("signup.completed") });
       setActiveStep(steps[2]);
       setTimeout(() => navigate("/", { replace: true }), 800);
+    },
+    onError: (err: any) =>
+      showToastAlert("error", {
+        message: err?.response?.data?.detail ?? err.message
+      })
+  });
+
+  const resendMut = useMutation({
+    mutationFn: () => UserService.resendCode({ email: form.email }),
+    onSuccess: (data: any) => {
+      handleCooldown(data.resendAvailableInSeconds);
+      showToastAlert("success", { message: t("signup.codeSent") });
     },
     onError: (err: any) =>
       showToastAlert("error", {
@@ -274,10 +302,12 @@ export default function SignUpPage() {
           <Button
             variant="text"
             size="small"
-            disabled={preSignUpMut.isPending}
-            onClick={() => preSignUpMut.mutate()}
+            disabled={resendMut.isPending || cooldownLeft > 0}
+            onClick={() => resendMut.mutate()}
           >
-            {t("signup.resend")}
+            {cooldownLeft > 0
+              ? `${t("signup.resend")} (${Math.ceil(cooldownLeft / 1000)})`
+              : t("signup.resend")}
           </Button>
         </Box>
       )}

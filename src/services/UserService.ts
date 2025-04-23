@@ -2,8 +2,10 @@ import {
   CompleteSignUpCommand,
   ICompleteSignUpCommand,
   IPreSignUpCommand,
+  IResendVerificationCommand,
   ISignInCommand,
   PreSignUpCommand,
+  ResendVerificationCommand,
   SignInCommand
 } from "@diploma-lnu-kaparys/diploma-api-client";
 import { usersClient } from "../api/ApiClients";
@@ -22,6 +24,11 @@ class UserService extends ServiceBase {
   async completeCoachSignUp(variables: ICompleteSignUpCommand) {
     const command = CompleteSignUpCommand.fromJS(variables);
     return usersClient.completeSignUp(command);
+  }
+
+  async resendCode(variables: IResendVerificationCommand) {
+    const command = ResendVerificationCommand.fromJS(variables);
+    return usersClient.resendVerification(command);
   }
 }
 
