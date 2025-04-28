@@ -15,6 +15,7 @@ import { HistoryContext } from "./components/hooks/useHistory";
 import AppLayout from "./components/layout/AppLayout";
 import { ThemeProvider as StylesThemeProvider } from "@mui/styles";
 import AxiosInterceptor from "./api/AxiosInterceptor";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const history = createBrowserHistory();
@@ -31,9 +32,11 @@ function App() {
                 <ReactQueryClient>
                   <AuthContextProvider>
                     <AxiosInterceptor>
-                      <AppLayout>
-                        <AppRouter />
-                      </AppLayout>
+                      <BrowserRouter>
+                        <AppLayout>
+                          <AppRouter />
+                        </AppLayout>
+                      </BrowserRouter>
                     </AxiosInterceptor>
                   </AuthContextProvider>
                 </ReactQueryClient>

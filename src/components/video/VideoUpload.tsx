@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useDropzone } from "react-dropzone";
 import makeStyles from "@mui/styles/makeStyles";
+import { useUploadVideo } from "../hooks/useUploadVideo";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,16 +73,29 @@ export default function VideoUpload() {
   const s = useStyles();
   const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
+  const [progress, setProgress] = useState(0);
+  const { upload } = useUploadVideo((p) => setProgress(p));
+  const navigate = useNavigate();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles && acceptedFiles.length > 0) {
-      setFile(acceptedFiles[0]);
-    }
-  }, []);
+  const onDrop = useCallback(
+    async (files: File[]) => {
+      const f = files[0];
+      try {
+        setFile(f);
+        const { videoId } = await upload(f);
+        navigate(`/video/${videoId}`);
+      } catch (e: any) {
+        alert(e.message ?? "Upload failed");
+        setFile(null);
+        setProgress(0);
+      }
+    },
+    [upload, navigate]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "video/*": [] },
+    accept: { "video/mp4": [] },
     maxFiles: 1
   });
 
@@ -91,36 +106,45 @@ export default function VideoUpload() {
           {t("videoTitle")}
         </Typography>
 
-        {isDragActive && (
-          <Box className={s.overlay}>
-            <Typography variant="h4" color="white">
-              {t("dropYourVideo")}
-            </Typography>
-          </Box>
-        )}
-
-        {file ? (
-          <Box className={s.videoContainer}>
-            <Box
-              component="video"
-              src={URL.createObjectURL(file)}
-              controls
-              className={s.video}
-            >
-              <track kind="captions" src="" label="No captions" />
-            </Box>
-          </Box>
-        ) : (
+        {!file && (
           <Box {...getRootProps()} className={s.uploadBox}>
             <input {...getInputProps()} />
             <CloudUploadIcon
               className={s.icon}
               color={isDragActive ? "primary" : "disabled"}
             />
-            <Typography variant="h6" mb={1}>
-              {t("dragInstruction")}
-            </Typography>
+            <Typography variant="h6">{t("dragInstruction")}</Typography>
           </Box>
+        )}
+
+        {file && (
+          <>
+            <Box className={s.videoContainer}>
+              <video
+                src={URL.createObjectURL(file)}
+                controls
+                className={s.video}
+              >
+                <track kind="captions" />
+              </video>
+            </Box>
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{ mt: 2 }}
+            />
+            {progress === 100 && (
+              <Button
+                onClick={() => {
+                  setFile(null);
+                  setProgress(0);
+                }}
+                sx={{ mt: 1 }}
+              >
+                {t("uploadVideo")}
+              </Button>
+            )}
+          </>
         )}
       </Box>
     </Box>

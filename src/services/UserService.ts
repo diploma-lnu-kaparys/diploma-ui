@@ -6,7 +6,8 @@ import {
   ISignInCommand,
   PreSignUpCommand,
   ResendVerificationCommand,
-  SignInCommand
+  SignInCommand,
+  UserInfoDto
 } from "@diploma-lnu-kaparys/diploma-api-client";
 import { usersClient } from "../api/ApiClients";
 import ServiceBase from "./ServiceBase";
@@ -29,6 +30,10 @@ class UserService extends ServiceBase {
   async resendCode(variables: IResendVerificationCommand) {
     const command = ResendVerificationCommand.fromJS(variables);
     return usersClient.resendVerification(command);
+  }
+
+  async userInfo(id: number): Promise<UserInfoDto> {
+    return usersClient.getUserInfo(id);
   }
 }
 

@@ -6,12 +6,14 @@ import {
   PRIVACY_ROUTE,
   SIGNUP_ROUTE,
   LOGIN_ROUTE,
-  DEFAULT_ROUTE
+  DEFAULT_ROUTE,
+  VIDEO_ROUTE
 } from "./routes";
 import SignUpRoute from "./auth/signUp/SignUpRoute";
 import LoginRoute from "./auth/login/LoginRoute";
 import HomeRoute from "./default/HomeRoute";
 import ErrorPage from "../pages/errors/ErrorPage";
+import VideoPage from "../pages/VideoPage";
 
 export const NotFoundPage = () => <ErrorPage error={new HttpError(404)} />;
 export const AccessDeniedPage = () => <ErrorPage error={new HttpError(403)} />;
@@ -38,6 +40,7 @@ export const loggedInRoutes = (
       element={<Navigate to={DEFAULT_ROUTE} replace />}
     />
     <Route path={DEFAULT_ROUTE} element={<HomeRoute />} />
+    <Route path={VIDEO_ROUTE} element={<VideoPage />} />
   </>
 );
 

@@ -28,16 +28,9 @@ const AppRouter = () => {
   const { authorized: isAuthenticated } = useAuth();
 
   return (
-    <Router>
-      <ErrorBoundary>
-        <Routes>
-          <Route
-            path="/*"
-            element={<AppRoutes isAuthenticated={isAuthenticated} />}
-          />
-        </Routes>
-      </ErrorBoundary>
-    </Router>
+    <ErrorBoundary>
+      <AppRoutes isAuthenticated={isAuthenticated} />
+    </ErrorBoundary>
   );
 };
 
