@@ -15,7 +15,7 @@ class StorageService extends ServiceBase {
   async createSignedUrl(
     variables: ICreateSignedUrlCommand
   ): Promise<SignedUrlVm> {
-    const command = new CreateSignedUrlCommand(variables);
+    const command = CreateSignedUrlCommand.fromJS(variables);
     return storageClient.createSignedUrl(command);
   }
 }

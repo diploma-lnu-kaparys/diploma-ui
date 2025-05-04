@@ -1,4 +1,6 @@
 import {
+  AnalyzeSentimentCommand,
+  IAnalyzeSentimentCommand,
   ITranscribeVideoCommand,
   TranscribeVideoCommand,
   VideoDto
@@ -12,8 +14,13 @@ class VideoService extends ServiceBase {
     return videosClient.getVideoById(id);
   }
 
+  async analyzeSentiment(variables: IAnalyzeSentimentCommand) {
+    const command = AnalyzeSentimentCommand.fromJS(variables);
+    return videosClient.analyzeSentiment(command);
+  }
+
   async transcribeVideo(variables: ITranscribeVideoCommand) {
-    const command = new TranscribeVideoCommand(variables);
+    const command = TranscribeVideoCommand.fromJS(variables);
     return videosClient.transcribeVideo(command);
   }
 }

@@ -32,6 +32,13 @@
   "logout.cancel": "Cancel",
   "logout.logout": "Logout",
   "signup.invalidEmail": "Please enter a valid email address",
+  "home": "New analysis",
+  "transcribing": "Transcribing…",
+  "analyzingSentiment": "Analyzing sentiment…",
+  "transcriptionCompleted": "Transcription completed!",
+  "transcriptionFailed": "Transcription failed",
+  "sentimentAnalysisDone": "Sentiment analysis done!",
+  "analysisFailed": "Analysis failed",
   "passwordCriteria": {
     "minLength": "At least 8 characters",
     "hasLetter": "One alphabetical character",

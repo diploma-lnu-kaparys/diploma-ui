@@ -83,6 +83,8 @@ export default function VideoUpload() {
       try {
         setFile(f);
         const { videoId } = await upload(f);
+        setFile(null);
+        setProgress(0);
         navigate(`/video/${videoId}`);
       } catch (e: any) {
         alert(e.message ?? "Upload failed");
@@ -133,7 +135,7 @@ export default function VideoUpload() {
               value={progress}
               sx={{ mt: 2 }}
             />
-            {progress === 100 && (
+            {file && progress === 100 && (
               <Button
                 onClick={() => {
                   setFile(null);

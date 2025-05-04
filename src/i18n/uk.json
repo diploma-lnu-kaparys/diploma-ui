@@ -32,6 +32,13 @@
   "logout.cancel": "Скасувати",
   "logout.logout": "Вийти",
   "signup.invalidEmail": "Будь ласка, введіть коректну ел. пошту",
+  "home": "Новий аналіз",
+  "transcribing": "Транскрипція",
+  "analyzingSentiment": "Аналіз емоцій…",
+  "transcriptionCompleted": "Транскрипцію завершено!",
+  "transcriptionFailed": "Помилка транскрипції",
+  "sentimentAnalysisDone": "Аналіз емоцій завершено!",
+  "analysisFailed": "Не вдалося виконати аналіз",
   "passwordCriteria": {
     "minLength": "Не менш ніж 8 символів",
     "hasLetter": "Принаймні одна літера",

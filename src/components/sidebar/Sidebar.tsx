@@ -15,8 +15,10 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
 import { useTranslation } from "react-i18next";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useUserInfo } from "../hooks/useUserInfo";
+import { DEFAULT_ROUTE } from "../../routes/routes";
+import HomeIcon from "@mui/icons-material/Home";
 
 const ScrollableContainer = styled("div")({
   height: "75vh",
@@ -31,6 +33,7 @@ export default function Sidebar({ toggleSidebar }: SidebarProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { user, currentUserLoading: isLoading } = useUserInfo();
   const location = useLocation();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -66,6 +69,42 @@ export default function Sidebar({ toggleSidebar }: SidebarProps) {
           </Typography>
         </Box>
       )}
+
+      <Box
+        display="flex"
+        alignItems="center"
+        width="100%"
+        minHeight={64}
+        px={2}
+        py={1.5}
+        mb={1}
+        sx={{
+          "&:hover": {
+            backgroundColor: (theme) => theme.palette.action.hover
+          }
+        }}
+      >
+        <IconButton
+          size="small"
+          onClick={() => {
+            navigate(DEFAULT_ROUTE);
+            if (isMobile) toggleSidebar();
+          }}
+          sx={{ mr: 1 }}
+        >
+          <HomeIcon fontSize="small" />
+        </IconButton>
+        <Typography
+          variant="body2"
+          sx={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate(DEFAULT_ROUTE);
+            if (isMobile) toggleSidebar();
+          }}
+        >
+          {t("home")}
+        </Typography>
+      </Box>
 
       <Divider />
 
