@@ -15,7 +15,8 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Link
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -264,6 +265,12 @@ export default function SignUpPage() {
           >
             {t("signup.sendCode")}
           </Button>
+          <Typography align="center" sx={{ mt: 2 }}>
+            {t("signup.haveAccountText")}{" "}
+            <Link component="button" onClick={() => navigate("/login")}>
+              {t("signup.haveAccountLink")}
+            </Link>
+          </Typography>
         </Box>
       )}
 

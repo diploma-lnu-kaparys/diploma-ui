@@ -87,10 +87,6 @@ export default function LayoutHeader({
             </IconButton>
           )}
 
-          <Typography variant="h6" noWrap>
-            My Awesome App
-          </Typography>
-
           <Box sx={{ flexGrow: 1 }} />
 
           <LanguageSwitcher />

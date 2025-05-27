@@ -26,6 +26,8 @@
   "signup.codeSent": "Код відправлено!",
   "signup.completed": "Реєстрацію завершено!",
   "signup.success": "Ви успішно зареєструвалися — зараз перенаправимо...",
+  "signup.haveAccountText": "Вже маєте акаунт?",
+  "signup.haveAccountLink": "Увійти",
   "login.success": "Ви успішно увійшли!",
   "logout.confirmTitle": "Підтвердіть вихід",
   "logout.confirmText": "Ви впевнені, що хочете вийти?",
