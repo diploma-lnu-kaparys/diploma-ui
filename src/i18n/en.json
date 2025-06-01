@@ -41,6 +41,11 @@
   "transcriptionFailed": "Transcription failed",
   "sentimentAnalysisDone": "Sentiment analysis done!",
   "analysisFailed": "Analysis failed",
+  "sentiment": {
+    "positive": "Positive",
+    "negative": "Negative",
+    "neutral": "Neutral"
+  },
   "passwordCriteria": {
     "minLength": "At least 8 characters",
     "hasLetter": "One alphabetical character",

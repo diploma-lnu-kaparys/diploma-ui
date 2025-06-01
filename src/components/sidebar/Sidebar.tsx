@@ -25,6 +25,12 @@ const ScrollableContainer = styled("div")({
   overflowY: "auto"
 });
 
+const Logo = styled("img")({
+  width: 24,
+  height: 24,
+  marginRight: 8
+});
+
 type SidebarProps = { toggleSidebar: () => void };
 
 export default function Sidebar({ toggleSidebar }: SidebarProps) {
@@ -55,7 +61,10 @@ export default function Sidebar({ toggleSidebar }: SidebarProps) {
         alignItems="center"
         p={2}
       >
-        <Typography variant="h6">{t("myAnalyses")}</Typography>
+        <Box display="flex" alignItems="center">
+          <Logo src="/logo.png" alt="Logo" />
+          <Typography variant="h6">{t("myAnalyses")}</Typography>
+        </Box>
         <IconButton onClick={toggleSidebar}>
           <CloseIcon />
         </IconButton>

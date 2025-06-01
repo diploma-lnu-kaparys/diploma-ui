@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -36,8 +37,18 @@ export default function VideoPage() {
   const { data: meta, isLoading: metaLoading } = useQuery<VideoDto>({
     queryKey: [VIDEO_QUERY_KEY, vid],
     queryFn: () => VideoService.getVideoById(vid),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    gcTime: 0,
+    refetchOnMount: true
   });
+
+  const [sentiment, setSentiment] = React.useState<SentimentResultDto | null>(
+    null
+  );
+
+  React.useEffect(() => {
+    setSentiment(null);
+  }, [vid]);
 
   const { mutate: transcribeVideo, isPending: isTranscribing } = useMutation({
     mutationFn: () => VideoService.transcribeVideo({ videoId: vid }),
@@ -64,10 +75,6 @@ export default function VideoPage() {
       })
   });
 
-  const [sentiment, setSentiment] = React.useState<SentimentResultDto | null>(
-    null
-  );
-
   const { mutate: analyzeSentiment, isPending: isAnalyzing } = useMutation({
     mutationFn: () => VideoService.analyzeSentiment({ videoId: vid }),
     onMutate: () => ({
@@ -91,6 +98,13 @@ export default function VideoPage() {
       showToastAlert("error", { message: err?.message ?? t("analysisFailed") })
   });
 
+  // Update sentiment from meta when available
+  React.useEffect(() => {
+    if (meta?.sentimentAnalysisResult && !sentiment) {
+      setSentiment(meta.sentimentAnalysisResult);
+    }
+  }, [meta, sentiment]);
+
   const { data: signedUrl } = useQuery<string>({
     enabled: !!meta?.storagePath,
     queryKey: [SIGNED_URL_QUERY_KEY, meta?.storagePath],
@@ -109,11 +123,6 @@ export default function VideoPage() {
       return;
     }
 
-    if (hasSentiment && !sentiment) {
-      setSentiment(meta.sentimentAnalysisResult!);
-      return;
-    }
-
     if (hasText && !hasSentiment && !isAnalyzing) {
       analyzeSentiment();
     }
@@ -127,20 +136,42 @@ export default function VideoPage() {
   ]);
 
   const sentimentChip = (res: SentimentResultDto | null) => {
-    if (!res) return null;
-    const positive = res.overallSentiment === "Positive";
+    if (!res || !res.overallSentiment) return null;
+
+    const getSentimentConfig = (sentiment: string) => {
+      switch (sentiment) {
+        case "Positive":
+          return {
+            color: "success" as const,
+            icon: <EmojiEmotionsIcon fontSize="small" sx={{ mr: 0.5 }} />
+          };
+        case "Negative":
+          return {
+            color: "error" as const,
+            icon: (
+              <SentimentDissatisfiedIcon fontSize="small" sx={{ mr: 0.5 }} />
+            )
+          };
+        default:
+          return {
+            color: "warning" as const,
+            icon: <SentimentSatisfiedIcon fontSize="small" sx={{ mr: 0.5 }} />
+          };
+      }
+    };
+
+    const config = getSentimentConfig(res.overallSentiment);
+    const sentimentKey = res.overallSentiment.toLowerCase() as
+      | "positive"
+      | "negative"
+      | "neutral";
+
     return (
       <Chip
         sx={{ mt: 2 }}
-        color={positive ? "success" : "error"}
-        icon={
-          positive ? (
-            <EmojiEmotionsIcon fontSize="small" sx={{ mr: 0.5 }} />
-          ) : (
-            <SentimentDissatisfiedIcon fontSize="small" sx={{ mr: 0.5 }} />
-          )
-        }
-        label={`${res.overallSentiment} • ${(res.score! * 100).toFixed(1)} %`}
+        color={config.color}
+        icon={config.icon}
+        label={`${t(`sentiment.${sentimentKey}`)} • ${(res.score! * 100).toFixed(1)} %`}
       />
     );
   };
@@ -158,11 +189,30 @@ export default function VideoPage() {
         {meta.fileName}
       </Typography>
 
-      {signedUrl && (
-        <video src={signedUrl} controls width="100%">
-          <track kind="captions" default />
-        </video>
-      )}
+      <Box
+        sx={{
+          aspectRatio: "16/9",
+          backgroundColor: "black",
+          borderRadius: 1,
+          overflow: "hidden",
+          maxHeight: "70vh"
+        }}
+      >
+        {signedUrl && (
+          <video
+            src={signedUrl}
+            controls
+            width="100%"
+            height="100%"
+            style={{
+              objectFit: "contain",
+              display: "block"
+            }}
+          >
+            <track kind="captions" default />
+          </video>
+        )}
+      </Box>
 
       {(isTranscribing || isAnalyzing) && (
         <Stack mt={2} spacing={1}>

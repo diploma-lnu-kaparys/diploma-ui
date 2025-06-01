@@ -41,6 +41,11 @@
   "transcriptionFailed": "Помилка транскрипції",
   "sentimentAnalysisDone": "Аналіз емоцій завершено!",
   "analysisFailed": "Не вдалося виконати аналіз",
+  "sentiment": {
+    "positive": "Позитивний",
+    "negative": "Негативний",
+    "neutral": "Нейтральний"
+  },
   "passwordCriteria": {
     "minLength": "Не менш ніж 8 символів",
     "hasLetter": "Принаймні одна літера",

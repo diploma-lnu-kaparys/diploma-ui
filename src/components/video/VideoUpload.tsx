@@ -135,17 +135,6 @@ export default function VideoUpload() {
               value={progress}
               sx={{ mt: 2 }}
             />
-            {file && progress === 100 && (
-              <Button
-                onClick={() => {
-                  setFile(null);
-                  setProgress(0);
-                }}
-                sx={{ mt: 1 }}
-              >
-                {t("uploadVideo")}
-              </Button>
-            )}
           </>
         )}
       </Box>
