@@ -233,7 +233,7 @@ export default function VideoPage() {
 
       {meta.subtitle?.rawText && (
         <Box mt={3}>
-          <Typography variant="h6">Subtitles</Typography>
+          <Typography variant="h6">{t("subtitles")}</Typography>
           <Typography whiteSpace="pre-wrap">{meta.subtitle.rawText}</Typography>
         </Box>
       )}

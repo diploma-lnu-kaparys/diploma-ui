@@ -46,6 +46,7 @@
     "negative": "Negative",
     "neutral": "Neutral"
   },
+  "subtitles": "Subtitles",
   "passwordCriteria": {
     "minLength": "At least 8 characters",
     "hasLetter": "One alphabetical character",

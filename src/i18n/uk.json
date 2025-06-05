@@ -46,6 +46,7 @@
     "negative": "Негативний",
     "neutral": "Нейтральний"
   },
+  "subtitles": "Субтитри",
   "passwordCriteria": {
     "minLength": "Не менш ніж 8 символів",
     "hasLetter": "Принаймні одна літера",
